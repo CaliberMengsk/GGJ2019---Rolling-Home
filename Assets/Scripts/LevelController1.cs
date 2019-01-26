@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
+[System.Serializable]
+public class LevelEvent : UnityEvent<Level>{}
+
 public class LevelController1 : MonoBehaviour {
 	[SerializeField]
 	string[] levelNames;
@@ -16,9 +19,11 @@ public class LevelController1 : MonoBehaviour {
 	float levelSeparationDistance = 100f;
 	[SerializeField]
 	float levelReplacementSpeed = 100f;
+	[SerializeField]
+	Player player;
 	public UnityEvent OnAllLevelsComplete = new UnityEvent();
-	public UnityEvent OnLevelTransitionComplete = new UnityEvent();
-	public UnityEvent OnLevelLoaded = new UnityEvent();
+	public LevelEvent OnLevelTransitionComplete = new LevelEvent();
+	public LevelEvent OnLevelLoaded = new LevelEvent();
 
 	public bool nextLevelReady { get { return loadedScene != default(Scene) && loadedScene.isLoaded && loadedScene.IsValid(); }}
 	bool levelTransition = false;
@@ -41,33 +46,52 @@ public class LevelController1 : MonoBehaviour {
 
 			// track replacement progress of the levels
 			float moveAmount = levelReplacementSpeed * Time.deltaTime;
-			if(levelProgess + moveAmount > levelSeparationDistance){ // if at our destination, do cleanup of transition
-				// finish amy movement
+			if(levelProgess + moveAmount >= levelSeparationDistance) { // if at our destination, do cleanup of transition
+																	   // finish amy movement
 				moveAmount = levelSeparationDistance - levelProgess;
 				// cleanup
 				levelProgess = levelSeparationDistance;
 				levelTransition = false;
+				currentLevel.OnEndReached.RemoveListener(GoToNextLevel);
 				SceneManager.UnloadSceneAsync(currentScene);
 				currentScene = loadedScene;
 				currentLevel = loadedLevel;
+				currentLevel.OnEndReached.AddListener(GoToNextLevel);
 				levelNamesIndex++;
-				if(StartLoadnext()){
-					OnLevelTransitionComplete.Invoke();
-				}else{
+
+				Vector3 movement = Vector3.up * moveAmount;
+
+				// move both levels up by the amount required each update step
+				foreach(GameObject g in currentScene.GetRootGameObjects()) {
+					g.transform.position += movement;
+				}
+				foreach(GameObject g in loadedScene.GetRootGameObjects()) {
+					g.transform.position += movement;
+				}
+
+				Debug.Log("setting player " + player.transform.position + " to " + currentLevel.GetStartPoint().position);
+
+				player.transform.parent.position = currentLevel.GetStartPoint().position;
+				player.rb.isKinematic = false;
+
+				OnLevelTransitionComplete.Invoke(currentLevel);
+
+				if(!StartLoadnext()) {
 					// no more levels to load, end game
 					OnAllLevelsComplete.Invoke();
 				}
-			}else{
+			} else {
 				levelProgess += moveAmount;
-			}
-			Vector3 movement = Vector3.up * moveAmount;
 
-			// move both levels up by the amount required each update step
-			foreach(GameObject g in currentScene.GetRootGameObjects()){
-				g.transform.position += movement;
-			}
-			foreach(GameObject g in loadedScene.GetRootGameObjects()) {
-				g.transform.position += movement;
+				Vector3 movement = Vector3.up * moveAmount;
+
+				// move both levels up by the amount required each update step
+				foreach(GameObject g in currentScene.GetRootGameObjects()) {
+					g.transform.position += movement;
+				}
+				foreach(GameObject g in loadedScene.GetRootGameObjects()) {
+					g.transform.position += movement;
+				}
 			}
 		}
 	}
@@ -90,6 +114,7 @@ public class LevelController1 : MonoBehaviour {
 			OnAllLevelsComplete.Invoke();
 			return;
 		}
+		player.rb.isKinematic = true;
 		Debug.Log("Going to level " + loadedScene.name + " from " + currentScene.name);
 		if(!nextLevelReady){
 			// wait for level load
@@ -101,7 +126,7 @@ public class LevelController1 : MonoBehaviour {
 		levelTransition = true;
 	}
 
-	void WaitForLoad(){
+	void WaitForLoad(Level level){
 		GoToNextLevel();
 		OnLevelLoaded.RemoveListener(WaitForLoad);
 	}
@@ -113,13 +138,19 @@ public class LevelController1 : MonoBehaviour {
 		foreach(GameObject g in scene.GetRootGameObjects()) {
 			level = g.GetComponent<Level>();
 			if(level != null) {
+				level.player = player;
 				// scene has a Level object, is a loaded level. init here
 				if(currentLevel == null) { // initial level needs to start up high so levels can load in below it.
 					Debug.Log("Scene " + scene.name + " is first level");
 					currentScene = scene;
 					currentLevel = level;
+					currentLevel.OnEndReached.AddListener(GoToNextLevel);
 					level.Move(Vector3.up * levelSeparationDistance);
 					StartLoadnext();
+					// player init stuff
+					Debug.Log("* setting player " + player.transform.position + " to " + level.GetStartPoint().position);
+
+					player.transform.position = level.GetStartPoint().position;
 				} else {
 					Debug.Log("Scene " + scene.name + " is a level");
 
@@ -127,7 +158,7 @@ public class LevelController1 : MonoBehaviour {
 					loadedLevel = level;
 					level.AlignTo(currentLevel.GetGoalPoint());
 				}
-				OnLevelLoaded.Invoke();
+				OnLevelLoaded.Invoke(level);
 				return;
 			}
 		}
