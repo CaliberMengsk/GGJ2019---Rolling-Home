@@ -8,4 +8,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Matt's Test Scene.unity
+    guid: e702c4581746b4e85a7112be0be32889
+  - enabled: 1
+    path: Assets/Levels/Matt's test level.unity
+    guid: 5eb72f6e8c1a2426aafae45907f2ddf4
+  - enabled: 1
+    path: Assets/Levels/Matt's test level1.unity
+    guid: 25c0eb1294edf4b528a86549201d6f69
+  - enabled: 1
+    path: Assets/Levels/Matt's test level2.unity
+    guid: 66b52f76c47984dbb9165f2965a5bdad
   m_configObjects: {}
