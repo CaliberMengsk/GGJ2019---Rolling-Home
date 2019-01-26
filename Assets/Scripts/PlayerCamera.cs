@@ -27,5 +27,7 @@ public class PlayerCamera : MonoBehaviour
 
         transform.localEulerAngles = new Vector3(45-Input.GetAxis("Vertical")*10, transform.localEulerAngles.y, Input.GetAxis("Horizontal") * 10);
         transform.position = player.transform.position - (Vector3.forward * distance) + new Vector3(0, normalHeight, 0);// * Input.GetAxis("Vertical") 
+
+        transform.Rotate(Vector3.up, Input.GetAxis("Mouse X"));
     }
 }

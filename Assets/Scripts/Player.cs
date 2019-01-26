@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
         moveDirection.x = Input.GetAxis("Horizontal") * speed;
         moveDirection.z = Input.GetAxis("Vertical")* speed;
 
-        rb.velocity += moveDirection;// cam.transform.TransformDirection(moveDirection);
+        Transform camClone = cam.transform;
+        camClone.localEulerAngles = new Vector3(0, camClone.localEulerAngles.y, 0);
+        rb.velocity += camClone.TransformDirection(moveDirection);
     }
 }
