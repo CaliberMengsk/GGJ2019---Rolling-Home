@@ -1,8 +1,11 @@
 Bare Minimum
 =================
-Menus
+Menus (Randy atm)
 Levels 1-5
 Level Art
+Make menu load level
+Find Music
+Find Sound FX
 
 
 Wants
