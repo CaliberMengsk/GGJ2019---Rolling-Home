@@ -368,8 +368,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 170959665}
   goalPoint: {fileID: 628118716}
-  deathHeight: -100
+  deathHeight: 0
   player: {fileID: 0}
+  OnEndReached:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!4 &2119331380
 Transform:
   m_ObjectHideFlags: 0

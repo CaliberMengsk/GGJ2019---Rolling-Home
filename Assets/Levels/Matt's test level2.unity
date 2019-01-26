@@ -437,7 +437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 1303505469}
   goalPoint: {fileID: 54078471}
-  deathHeight: -100
+  deathHeight: 0
   player: {fileID: 0}
   OnEndReached:
     m_PersistentCalls:

@@ -48,6 +48,8 @@ public class Level : MonoBehaviour
 
 	public void Respawn(){
 		player.transform.position = startPoint.transform.position;
+		player.rb.velocity = Vector3.zero;
+		player.rb.angularVelocity = Vector3.zero;
 	}
 
 	public void EndReached(){

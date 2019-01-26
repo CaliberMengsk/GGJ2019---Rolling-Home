@@ -7,6 +7,9 @@ using UnityEngine.Events;
 [System.Serializable]
 public class LevelEvent : UnityEvent<Level>{}
 
+[System.Serializable]
+public class LevelCompleteEvent : UnityEvent<LevelController1> { }
+
 public class LevelController1 : MonoBehaviour {
 	[SerializeField]
 	string[] levelNames;
@@ -21,7 +24,7 @@ public class LevelController1 : MonoBehaviour {
 	float levelReplacementSpeed = 100f;
 	[SerializeField]
 	Player player;
-	public UnityEvent OnAllLevelsComplete = new UnityEvent();
+	public LevelCompleteEvent OnAllLevelsComplete = new LevelCompleteEvent();
 	public LevelEvent OnLevelTransitionComplete = new LevelEvent();
 	public LevelEvent OnLevelLoaded = new LevelEvent();
 
@@ -29,9 +32,6 @@ public class LevelController1 : MonoBehaviour {
 	bool levelTransition = false;
 	float levelProgess = 0;
 
-	void Awake() {
-		DontDestroyOnLoad(gameObject);
-	}
 	// Start is called before the first frame update
 	void Start() {
 		transform.position += Vector3.up * levelSeparationDistance; // move to active scne area
@@ -49,6 +49,7 @@ public class LevelController1 : MonoBehaviour {
 			if(levelProgess + moveAmount >= levelSeparationDistance) { // if at our destination, do cleanup of transition
 																	   // finish amy movement
 				moveAmount = levelSeparationDistance - levelProgess;
+				Debug.Log(moveAmount);
 				// cleanup
 				levelProgess = levelSeparationDistance;
 				levelTransition = false;
@@ -78,7 +79,7 @@ public class LevelController1 : MonoBehaviour {
 
 				if(!StartLoadnext()) {
 					// no more levels to load, end game
-					OnAllLevelsComplete.Invoke();
+					OnAllLevelsComplete.Invoke(this);
 				}
 			} else {
 				levelProgess += moveAmount;
@@ -111,7 +112,7 @@ public class LevelController1 : MonoBehaviour {
 	public void GoToNextLevel(){
 		if(levelNamesIndex >= levelNames.Length-1){ // if I'm on the last level
 			Debug.Log("All levels complete.");
-			OnAllLevelsComplete.Invoke();
+			OnAllLevelsComplete.Invoke(this);
 			return;
 		}
 		player.rb.isKinematic = true;
@@ -171,5 +172,9 @@ public class LevelController1 : MonoBehaviour {
 	}
 	void OnDisable() {
 		SceneManager.sceneLoaded -= OnSceneLoaded;
+	}
+	void OnDestroy() {
+		SceneManager.UnloadSceneAsync(currentScene);
+		SceneManager.UnloadSceneAsync(loadedScene);
 	}
 }
