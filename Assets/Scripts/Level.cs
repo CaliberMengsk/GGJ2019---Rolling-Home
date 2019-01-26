@@ -33,7 +33,7 @@ public class Level : MonoBehaviour
 
 	public void AlignTo(Transform hole){
 		transform.position = new Vector3(hole.position.x, transform.position.y, hole.position.z)-startPoint.transform.position;
-		Vector3 euler = transform.eulerAngles;
+		Vector3 euler = transform.eulerAngles - startPoint.transform.eulerAngles;
 		transform.rotation = Quaternion.Euler(euler.x, hole.eulerAngles.y, euler.z);
 	}
 	public void Move(Vector3 point){
@@ -46,8 +46,10 @@ public class Level : MonoBehaviour
 		return startPoint.transform;
 	}
 
-	public void Respawn(){
-		player.transform.position = startPoint.transform.position;
+	public void Respawn(bool reposition=true){
+		if(reposition) {
+			player.transform.position = startPoint.transform.position;
+		}
 		player.rb.velocity = Vector3.zero;
 		player.rb.angularVelocity = Vector3.zero;
 	}

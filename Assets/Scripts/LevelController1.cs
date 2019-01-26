@@ -72,15 +72,12 @@ public class LevelController1 : MonoBehaviour {
 
 				Debug.Log("setting player " + player.transform.position + " to " + currentLevel.GetStartPoint().position);
 
-				player.transform.parent.position = currentLevel.GetStartPoint().position;
 				player.rb.isKinematic = false;
+				currentLevel.Respawn();
 
 				OnLevelTransitionComplete.Invoke(currentLevel);
 
-				if(!StartLoadnext()) {
-					// no more levels to load, end game
-					OnAllLevelsComplete.Invoke(this);
-				}
+				StartLoadnext();
 			} else {
 				levelProgess += moveAmount;
 
@@ -99,11 +96,13 @@ public class LevelController1 : MonoBehaviour {
 
 	bool StartLoadnext(){
 		if(levelNames.Length - 1 > levelNamesIndex) {
+			Debug.Log("Begin Load Scene " + levelNames[levelNamesIndex + 1]);
 			// load next level
 			//levelNamesIndex++;
 			SceneManager.LoadSceneAsync(levelNames[levelNamesIndex+1], LoadSceneMode.Additive);
 			return true;
 		}
+		Debug.Log("No More Scenes to Load");
 		return false;
 
 	}
@@ -128,6 +127,7 @@ public class LevelController1 : MonoBehaviour {
 	}
 
 	void WaitForLoad(Level level){
+		Debug.Log("Waiting...");
 		GoToNextLevel();
 		OnLevelLoaded.RemoveListener(WaitForLoad);
 	}
