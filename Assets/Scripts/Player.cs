@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
@@ -11,7 +12,11 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public Vector3 moveDirection;
 
-    Rigidbody rb;
+	[HideInInspector]
+    public Rigidbody rb;
+
+	public UnityEvent OnEndPointTrigger = new UnityEvent();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,4 +34,10 @@ public class Player : MonoBehaviour
         camClone.localEulerAngles = new Vector3(0, camClone.localEulerAngles.y, 0);
         rb.velocity += camClone.TransformDirection(moveDirection);
     }
+
+	void OnTriggerEnter(Collider other) {
+		if(other.CompareTag("End Point")){
+			OnEndPointTrigger.Invoke();
+		}
+	}
 }
