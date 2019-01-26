@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Globals : MonoBehaviour
@@ -40,5 +41,10 @@ public class Globals : MonoBehaviour
     {
         fxVolume = inVol;
         PlayerPrefs.SetFloat("fxVolume", inVol);
+    }
+
+    public void LoadLevel (int levelID)
+    {
+        SceneManager.LoadScene(levelID);
     }
 }
