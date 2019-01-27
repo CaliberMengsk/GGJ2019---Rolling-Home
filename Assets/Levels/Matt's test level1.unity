@@ -150,6 +150,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  icarusDistance: 150
+  icarusSpeed: 20
 --- !u!4 &1110043596
 Transform:
   m_ObjectHideFlags: 0
@@ -250,7 +252,7 @@ PrefabInstance:
     - target: {fileID: 402773048958049959, guid: c340c370467f34a9f8d35a2f2dcfa1c8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.74
+      value: -0.05
       objectReference: {fileID: 0}
     - target: {fileID: 402773048958049959, guid: c340c370467f34a9f8d35a2f2dcfa1c8,
         type: 3}
