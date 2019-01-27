@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Levels/CJ Level.unity
     guid: ad5d2b1aa00f4b440b5a54f210e9ac98
+  - enabled: 1
+    path: Assets/Levels/Level 3.unity
+    guid: 036c6e628b0644f45be1a39b5ca59f2e
   m_configObjects: {}

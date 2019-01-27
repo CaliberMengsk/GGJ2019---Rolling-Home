@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.373132, g: 0.3807496, b: 0.3587258, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -242,6 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelNames:
   - Levels/Level 1
+  - Levels/Level 3
   - Levels/Level 2
   - Levels/CJ Level
   - Levels/Matt's test level
@@ -250,7 +251,6 @@ MonoBehaviour:
   levelNamesIndex: 0
   levelSeparationDistance: 10
   levelReplacementSpeed: 9.8
-  icarusDistance: 150
   player: {fileID: 2006499251}
   OnAllLevelsComplete:
     m_PersistentCalls:
