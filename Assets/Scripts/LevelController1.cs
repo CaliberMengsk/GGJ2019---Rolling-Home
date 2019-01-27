@@ -23,8 +23,6 @@ public class LevelController1 : MonoBehaviour {
 	[SerializeField]
 	float levelReplacementSpeed = 100f;
 	[SerializeField]
-	float icarusDistance = 100f;
-	[SerializeField]
 	Player player;
 	public LevelCompleteEvent OnAllLevelsComplete = new LevelCompleteEvent();
 	public LevelEvent OnLevelTransitionComplete = new LevelEvent();
@@ -33,10 +31,6 @@ public class LevelController1 : MonoBehaviour {
 	public bool nextLevelReady { get { return loadedScene != default(Scene) && loadedScene.isLoaded && loadedScene.IsValid(); }}
 	bool levelTransition = false;
 	float levelProgess = 0;
-	bool icarusTransition = false;
-	Scene icarusScene;
-	Level icarusLevel;
-	float icarusProgress = 0;
 	Vector3 playerSlide;
 
 	// Start is called before the first frame update
@@ -63,10 +57,7 @@ public class LevelController1 : MonoBehaviour {
 				levelTransition = false;
 				currentLevel.OnEndReached.RemoveListener(GoToNextLevel);
 
-				icarusLevel = currentLevel;
-				icarusScene = currentScene;
-				icarusProgress = 0;
-				icarusTransition = true;
+				currentLevel.StartIcarus(currentScene);
 				//SceneManager.UnloadSceneAsync(currentScene);
 				currentScene = loadedScene;
 				currentLevel = loadedLevel;
@@ -107,22 +98,6 @@ public class LevelController1 : MonoBehaviour {
 				player.transform.position += playerSlide * moveAmount/levelSeparationDistance;
 			}
 		}
-		// shoot level to be unloaded up to the sky
-		if(icarusTransition){
-			float moveAmount = levelReplacementSpeed * Time.deltaTime;
-			if(icarusProgress + moveAmount >= icarusDistance) { // if at our destination, do cleanup of transition
-				Debug.Log("Unloading scene " + icarusScene.name);
-				SceneManager.UnloadSceneAsync(icarusScene);
-				icarusTransition = false;
-			}
-			icarusProgress += moveAmount;
-			Vector3 movement = Vector3.up * moveAmount;
-
-			// move both levels up by the amount required each update step
-			foreach(GameObject g in icarusScene.GetRootGameObjects()) {
-				g.transform.position += movement;
-			}					
-		}
 	}
 
 	bool StartLoadnext(){
@@ -146,6 +121,7 @@ public class LevelController1 : MonoBehaviour {
 			return;
 		}
 		player.rb.isKinematic = true;
+		currentLevel.player = null;
 
 		// get difference between start and current pose
 		playerSlide = loadedLevel.GetStartPoint().position + Vector3.up * levelSeparationDistance - player.transform.position;

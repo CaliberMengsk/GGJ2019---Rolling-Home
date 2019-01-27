@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.373132, g: 0.3807496, b: 0.3587258, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -142,27 +142,27 @@ PrefabInstance:
     - target: {fileID: 5888310292665141980, guid: f3ca97525006ae848a9bcdba15981803,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5888310292665141980, guid: f3ca97525006ae848a9bcdba15981803,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5888310292665141980, guid: f3ca97525006ae848a9bcdba15981803,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5888310292665141980, guid: f3ca97525006ae848a9bcdba15981803,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5888310292665141980, guid: f3ca97525006ae848a9bcdba15981803,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5888310292665141980, guid: f3ca97525006ae848a9bcdba15981803,
         type: 3}
@@ -172,7 +172,7 @@ PrefabInstance:
     - target: {fileID: 5888310292665141980, guid: f3ca97525006ae848a9bcdba15981803,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 5888310292665141980, guid: f3ca97525006ae848a9bcdba15981803,
         type: 3}
@@ -250,7 +250,7 @@ MonoBehaviour:
   levelNamesIndex: 0
   levelSeparationDistance: 10
   levelReplacementSpeed: 9.8
-  icarusDistance: 20
+  icarusDistance: 150
   player: {fileID: 2006499251}
   OnAllLevelsComplete:
     m_PersistentCalls:
