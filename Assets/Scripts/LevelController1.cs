@@ -23,6 +23,8 @@ public class LevelController1 : MonoBehaviour {
 	[SerializeField]
 	float levelReplacementSpeed = 100f;
 	[SerializeField]
+	float icarusDistance = 100f;
+	[SerializeField]
 	Player player;
 	public LevelCompleteEvent OnAllLevelsComplete = new LevelCompleteEvent();
 	public LevelEvent OnLevelTransitionComplete = new LevelEvent();
@@ -31,6 +33,10 @@ public class LevelController1 : MonoBehaviour {
 	public bool nextLevelReady { get { return loadedScene != default(Scene) && loadedScene.isLoaded && loadedScene.IsValid(); }}
 	bool levelTransition = false;
 	float levelProgess = 0;
+	bool icarusTransition = false;
+	Scene icarusScene;
+	Level icarusLevel;
+	float icarusProgress = 0;
 
 	// Start is called before the first frame update
 	void Start() {
@@ -41,6 +47,7 @@ public class LevelController1 : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
+		
 		if(levelTransition){
 			//Debug.Log("Transitioning from " + currentScene.name + " to " + loadedScene.name);
 
@@ -54,7 +61,12 @@ public class LevelController1 : MonoBehaviour {
 				levelProgess = levelSeparationDistance;
 				levelTransition = false;
 				currentLevel.OnEndReached.RemoveListener(GoToNextLevel);
-				SceneManager.UnloadSceneAsync(currentScene);
+
+				icarusLevel = currentLevel;
+				icarusScene = currentScene;
+				icarusProgress = 0;
+				icarusTransition = true;
+				//SceneManager.UnloadSceneAsync(currentScene);
 				currentScene = loadedScene;
 				currentLevel = loadedLevel;
 				currentLevel.OnEndReached.AddListener(GoToNextLevel);
@@ -91,6 +103,22 @@ public class LevelController1 : MonoBehaviour {
 					g.transform.position += movement;
 				}
 			}
+		}
+		// shoot level to be unloaded up to the sky
+		if(icarusTransition){
+			float moveAmount = levelReplacementSpeed * Time.deltaTime;
+			if(icarusProgress + moveAmount >= icarusDistance) { // if at our destination, do cleanup of transition
+				Debug.Log("Unloading scene " + icarusScene.name);
+				SceneManager.UnloadSceneAsync(icarusScene);
+				icarusTransition = false;
+			}
+			icarusProgress += moveAmount;
+			Vector3 movement = Vector3.up * moveAmount;
+
+			// move both levels up by the amount required each update step
+			foreach(GameObject g in icarusScene.GetRootGameObjects()) {
+				g.transform.position += movement;
+			}					
 		}
 	}
 

@@ -246,7 +246,8 @@ MonoBehaviour:
   - Levels/Matt's test level2
   levelNamesIndex: 0
   levelSeparationDistance: 10
-  levelReplacementSpeed: 10
+  levelReplacementSpeed: 9.8
+  icarusDistance: 20
   player: {fileID: 2006499251}
   OnAllLevelsComplete:
     m_PersistentCalls:
