@@ -4984,6 +4984,7 @@ MonoBehaviour:
   wallFloorSeparationThreshold: 45
   collisionSpeedThreshold: 0.1
   groundParticles: {fileID: 1734336478366738328}
+  hitSound: {fileID: 8300000, guid: c2a6eae75687edb47b86bd40e6e897e5, type: 3}
 --- !u!1 &5888310291411850225
 GameObject:
   m_ObjectHideFlags: 0
