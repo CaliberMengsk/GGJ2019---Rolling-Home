@@ -37,6 +37,7 @@ public class LevelController1 : MonoBehaviour {
 	Scene icarusScene;
 	Level icarusLevel;
 	float icarusProgress = 0;
+	Vector3 playerSlide;
 
 	// Start is called before the first frame update
 	void Start() {
@@ -81,6 +82,7 @@ public class LevelController1 : MonoBehaviour {
 				foreach(GameObject g in loadedScene.GetRootGameObjects()) {
 					g.transform.position += movement;
 				}
+				player.transform.position += playerSlide * moveAmount / levelSeparationDistance;
 
 				Debug.Log("setting player " + player.transform.position + " to " + currentLevel.GetStartPoint().position);
 
@@ -102,6 +104,7 @@ public class LevelController1 : MonoBehaviour {
 				foreach(GameObject g in loadedScene.GetRootGameObjects()) {
 					g.transform.position += movement;
 				}
+				player.transform.position += playerSlide * moveAmount/levelSeparationDistance;
 			}
 		}
 		// shoot level to be unloaded up to the sky
@@ -143,6 +146,10 @@ public class LevelController1 : MonoBehaviour {
 			return;
 		}
 		player.rb.isKinematic = true;
+
+		// get difference between start and current pose
+		playerSlide = loadedLevel.GetStartPoint().position + Vector3.up * levelSeparationDistance - player.transform.position;
+
 		Debug.Log("Going to level " + loadedScene.name + " from " + currentScene.name);
 		if(!nextLevelReady){
 			// wait for level load
