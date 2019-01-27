@@ -215,7 +215,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e2699a8c4e2c6bc409ceb955af85204e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 2.36
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e2699a8c4e2c6bc409ceb955af85204e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -307,6 +307,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  icarusDistance: 150
+  icarusSpeed: 20
 --- !u!4 &2511711309837537447
 Transform:
   m_ObjectHideFlags: 0
@@ -347,7 +349,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2969779985434250837}
   m_LocalRotation: {x: -0.49999982, y: -0.5000001, z: 0.5000002, w: 0.4999999}
-  m_LocalPosition: {x: -2.31, y: -5.65, z: -12.53}
+  m_LocalPosition: {x: 0.05, y: -5.65, z: -12.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2511711309837537447}
