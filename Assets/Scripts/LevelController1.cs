@@ -73,7 +73,7 @@ public class LevelController1 : MonoBehaviour {
 				Debug.Log("setting player " + player.transform.position + " to " + currentLevel.GetStartPoint().position);
 
 				player.rb.isKinematic = false;
-				currentLevel.Respawn();
+				//currentLevel.Respawn();
 
 				OnLevelTransitionComplete.Invoke(currentLevel);
 
