@@ -8,6 +8,7 @@ public class Globals : MonoBehaviour {
 	public static float fxVolume = 1, musicVolume = 1;
 
 	public Slider fxSlider, musicSlider;
+    public AudioSource fxSource, musicSource;
 
 	public static Globals instance;
 	// Start is called before the first frame update
